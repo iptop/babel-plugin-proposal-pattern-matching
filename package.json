@@ -1,0 +1,32 @@
+{
+  "name": "babel-plugin-proposal-pattern-matching",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint --fix src test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iptop/babel-plugin-proposal-pattern-matching.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iptop/babel-plugin-proposal-pattern-matching/issues"
+  },
+  "homepage": "https://github.com/iptop/babel-plugin-proposal-pattern-matching#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.15.8",
+    "@babel/generator": "^7.15.8",
+    "@babel/node": "^7.15.8",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/preset-es2015": "^7.0.0-beta.53",
+    "eslint": "^8.2.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1"
+  }
+}
