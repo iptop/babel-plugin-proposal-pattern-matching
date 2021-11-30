@@ -13,6 +13,7 @@ module.exports = {
   },
   "rules": {
     'no-unused-vars': 'off',
-    'camelcase': 'off'
+    'camelcase': 'off',
+    'eqeqeq': 'off'
   }
 }
