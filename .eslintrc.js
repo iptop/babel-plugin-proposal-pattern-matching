@@ -14,6 +14,7 @@ module.exports = {
   "rules": {
     'no-unused-vars': 'off',
     'camelcase': 'off',
-    'eqeqeq': 'off'
+    'eqeqeq': 'off',
+    'array-callback-return': 'off'
   }
 }
