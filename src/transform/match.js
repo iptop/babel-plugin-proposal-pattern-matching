@@ -42,7 +42,7 @@ function createIFBlock (babel, $pattern, $param, $$uid) {
   const $$body = $body.node
   $body.scope.rename(paramName, $$uid.name)
   const $$block = babel.template(`
-    if(UID == VALUE ){
+    if(UID === VALUE ){
       return RET
     }
   `)({
@@ -70,19 +70,39 @@ function transformPatterns (babel, $patterns, $$uid) {
   })
 }
 
+function isOperation ($paramValue) {
+  const astTag = $paramValue.get('object').getData('pattern-matching')
+  if (astTag == 'T') {
+    return true
+  } else {
+    return false
+  }
+}
+
 function transformDeconstructionLeaf (babel, $param) {
   const $$IFBlocks = []
   const traverse = babel.traverse
   const $$param = $param.node
   traverse($$param, {
     AssignmentPattern (path) {
+      const $paramValue = path.get('right')
+      const isOp = isOperation($paramValue)
       const $$Assignment = path.node
-      const $$IFBlock = babel.template(`
-        if(VAR != VAL ){
+      if(isOp){
+        const $$IFBlock = babel.template(`
+        if(!OP(VAR) ){
+          throw new Error("No matching pattern");
+        }
+        `)({ VAR: $$Assignment.left, OP: $$Assignment.right })
+        $$IFBlocks.push($$IFBlock)
+      }else{
+        const $$IFBlock = babel.template(`
+        if(VAR !== VAL ){
           throw new Error("No matching pattern");
         }
         `)({ VAR: $$Assignment.left, VAL: $$Assignment.right })
-      $$IFBlocks.push($$IFBlock)
+        $$IFBlocks.push($$IFBlock)
+      }
       path.replaceWith($$Assignment.left)
     }
   }, $param.scope, $param.path)

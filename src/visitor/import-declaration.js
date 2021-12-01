@@ -20,6 +20,10 @@ module.exports = (babel, path, state) => {
       if (importedName == 'default' || importedName == 'match') {
         $referencePath.setData('pattern-matching', 'match')
       }
+
+      if (importedName == 'T') {
+        $referencePath.setData('pattern-matching', 'T')
+      }
     }
   }
 }
