@@ -43,7 +43,7 @@ function createIFBlock (babel, $pattern, $param, $$uid) {
   const $body = $pattern.get('body')
   const $$body = $body.node
   $body.scope.rename(paramName, $$uid.name)
-  if(isOp){
+  if (isOp) {
     const $$block = babel.template(`
     if(OP(UID) ){
       return RET
@@ -54,7 +54,7 @@ function createIFBlock (babel, $pattern, $param, $$uid) {
       RET: resolveBody(babel, $$body)
     })
     return $$block
-  }else{
+  } else {
     const $$block = babel.template(`
     if(UID === VALUE ){
       return RET
@@ -66,7 +66,6 @@ function createIFBlock (babel, $pattern, $param, $$uid) {
     })
     return $$block
   }
-
 }
 
 function transformPatterns (babel, $patterns, $$uid) {
