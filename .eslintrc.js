@@ -15,6 +15,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'camelcase': 'off',
     'eqeqeq': 'off',
-    'array-callback-return': 'off'
+    'array-callback-return': 'off',
+    'no-empty-pattern': 'off'
   }
 }

@@ -8,6 +8,20 @@ function getPatterns ($root) {
   return $root.get('arguments')
 }
 
+function resolveBody (babel, $$body) {
+  const type = $$body.type
+  if (type == 'BlockStatement') {
+    return babel.template(`
+    (()=>{
+    RET
+    })()
+    `)(
+      { RET: $$body.body }
+    ).expression
+  }
+  return $$body
+}
+
 function createReturnBlock (babel, $pattern, $param, $$uid) {
   const paramName = $param.get('name').node
   const $body = $pattern.get('body')
@@ -16,7 +30,7 @@ function createReturnBlock (babel, $pattern, $param, $$uid) {
   const $$block = babel.template(`
     return RET
     `)({
-    RET: $$body
+    RET: resolveBody(babel, $$body)
   })
   return $$block
 }
@@ -34,7 +48,7 @@ function createIFBlock (babel, $pattern, $param, $$uid) {
   `)({
     UID: $$uid,
     VALUE: $$paramValue,
-    RET: $$body
+    RET: resolveBody(babel, $$body)
   })
   return $$block
 }
@@ -81,7 +95,6 @@ function createDeconstruction (babel, $pattern, $param, $$UID) {
   const $$body = $body.node
 
   const $$IFBlocks = transformDeconstructionLeaf(babel, $param)
-
   const $$deconstruction = babel.template(`
     try{
       let PATTERN = UID
@@ -92,9 +105,8 @@ function createDeconstruction (babel, $pattern, $param, $$UID) {
     `)({
     UID: $$UID,
     PATTERN: $$param,
-    RET: $$body,
-    IFBLOCKS:
-    $$IFBlocks
+    RET: resolveBody(babel, $$body),
+    IFBLOCKS: $$IFBlocks
   })
   return $$deconstruction
 }
