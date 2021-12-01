@@ -94,6 +94,10 @@ function isOperation ($paramValue) {
     return true
   }
 
+  if ($paramValue.get('callee').getData('pattern-matching') == 'not') {
+    return true
+  }
+
   return false
 }
 

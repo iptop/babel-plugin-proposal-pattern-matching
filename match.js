@@ -26,7 +26,7 @@ const T = {
 }
 const or = createRuntimeFunction(function () {
   const args = arguments
-  return function (val) {
+  return createRuntimeFunction(function (val) {
     for (let i = 0; i < args.length; i++) {
       const test = args[i]
       if (typeof test === 'function' && test.isPatternMatchingRuntimeFunction) {
@@ -40,10 +40,20 @@ const or = createRuntimeFunction(function () {
       }
     }
     return false
-  }
+  })
+})
+
+const not = createRuntimeFunction(function (test){
+  return createRuntimeFunction(function (val){
+    if (typeof test === 'function' && test.isPatternMatchingRuntimeFunction) {
+      return !test(val)
+    }
+    return test!==val
+  })
 })
 
 module.exports = match
 module.exports.match = match
 module.exports.T = T
 module.exports.or = or
+module.exports.not = not
