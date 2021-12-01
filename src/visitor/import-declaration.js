@@ -32,6 +32,10 @@ module.exports = (babel, path, state) => {
       if (importedName == 'not') {
         $referencePath.setData('pattern-matching', 'not')
       }
+
+      if (importedName == 'instanceOf') {
+        $referencePath.setData('pattern-matching', 'instanceOf')
+      }
     }
   }
 }

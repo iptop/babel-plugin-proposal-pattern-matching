@@ -90,11 +90,17 @@ function isOperation ($paramValue) {
     return true
   }
 
-  if ($paramValue.get('callee').getData('pattern-matching') == 'or') {
+  const astTag = $paramValue.get('callee').getData('pattern-matching')
+
+  if (astTag == 'or') {
     return true
   }
 
-  if ($paramValue.get('callee').getData('pattern-matching') == 'not') {
+  if (astTag == 'not') {
+    return true
+  }
+
+  if (astTag == 'instanceOf') {
     return true
   }
 

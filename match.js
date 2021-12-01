@@ -52,8 +52,15 @@ const not = createRuntimeFunction(function (test){
   })
 })
 
+const instanceOf = createRuntimeFunction(function (constructor){
+  return createRuntimeFunction(function (val) {
+    return val instanceof constructor
+  })
+})
+
 module.exports = match
 module.exports.match = match
 module.exports.T = T
 module.exports.or = or
 module.exports.not = not
+module.exports.instanceOf = instanceOf
