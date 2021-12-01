@@ -24,6 +24,10 @@ module.exports = (babel, path, state) => {
       if (importedName == 'T') {
         $referencePath.setData('pattern-matching', 'T')
       }
+
+      if (importedName == 'or') {
+        $referencePath.setData('pattern-matching', 'or')
+      }
     }
   }
 }

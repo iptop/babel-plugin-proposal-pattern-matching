@@ -37,20 +37,36 @@ function createReturnBlock (babel, $pattern, $param, $$uid) {
 
 function createIFBlock (babel, $pattern, $param, $$uid) {
   const paramName = $param.get('left.name').node
-  const $$paramValue = $param.get('right').node
+  const $paramValue = $param.get('right')
+  const $$paramValue = $paramValue.node
+  const isOp = isOperation($paramValue)
   const $body = $pattern.get('body')
   const $$body = $body.node
   $body.scope.rename(paramName, $$uid.name)
-  const $$block = babel.template(`
+  if(isOp){
+    const $$block = babel.template(`
+    if(OP(UID) ){
+      return RET
+    }
+  `)({
+      UID: $$uid,
+      OP: $$paramValue,
+      RET: resolveBody(babel, $$body)
+    })
+    return $$block
+  }else{
+    const $$block = babel.template(`
     if(UID === VALUE ){
       return RET
     }
   `)({
-    UID: $$uid,
-    VALUE: $$paramValue,
-    RET: resolveBody(babel, $$body)
-  })
-  return $$block
+      UID: $$uid,
+      VALUE: $$paramValue,
+      RET: resolveBody(babel, $$body)
+    })
+    return $$block
+  }
+
 }
 
 function transformPatterns (babel, $patterns, $$uid) {
@@ -71,12 +87,15 @@ function transformPatterns (babel, $patterns, $$uid) {
 }
 
 function isOperation ($paramValue) {
-  const astTag = $paramValue.get('object').getData('pattern-matching')
-  if (astTag == 'T') {
+  if ($paramValue.get('object').getData('pattern-matching') == 'T') {
     return true
-  } else {
-    return false
   }
+
+  if ($paramValue.get('callee').getData('pattern-matching') == 'or') {
+    return true
+  }
+
+  return false
 }
 
 function transformDeconstructionLeaf (babel, $param) {
@@ -88,14 +107,14 @@ function transformDeconstructionLeaf (babel, $param) {
       const $paramValue = path.get('right')
       const isOp = isOperation($paramValue)
       const $$Assignment = path.node
-      if(isOp){
+      if (isOp) {
         const $$IFBlock = babel.template(`
         if(!OP(VAR) ){
           throw new Error("No matching pattern");
         }
         `)({ VAR: $$Assignment.left, OP: $$Assignment.right })
         $$IFBlocks.push($$IFBlock)
-      }else{
+      } else {
         const $$IFBlock = babel.template(`
         if(VAR !== VAL ){
           throw new Error("No matching pattern");

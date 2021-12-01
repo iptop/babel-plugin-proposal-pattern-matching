@@ -4,4 +4,5 @@ const sum = x => match(x)(
   ([]) => 0
 )
 
+console.log(sum.toString())
 console.log(sum([1, 2, 3]))

@@ -18,6 +18,19 @@ const T = {
   NaN: isNaN
 }
 
+function or () {
+  const args = arguments
+  return function (val){
+    for (let i=0;i<args.length;i++){
+      if(val === args[i]){
+        return true
+      }
+    }
+    return false
+  }
+}
+
 module.exports = match
 module.exports.match = match
 module.exports.T = T
+module.exports.or = or
