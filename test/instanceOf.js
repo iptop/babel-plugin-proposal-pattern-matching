@@ -1,41 +1,13 @@
-import { match, instanceOf, or, not } from '../match'
+import { match, instanceOf, } from '../match'
 
-console.log(
-  match([])(
-    (v = instanceOf(Array)) => v
-  )
+const getType = val => match(val)(
+  (v=instanceOf(RegExp))=>'RegExp',
+  (v=instanceOf(Array))=>'Array',
+  (v=instanceOf(Object))=>'Object',
 )
 
-console.log(
-  match([])(
-    (v = instanceOf(Object)) => v
-  )
-)
+console.log(getType(/111/))
 
-console.log(
-  match([])(
-    (v = instanceOf(Number)) => v,
-    v => ''
-  )
-)
+console.log(getType([1,2,3]))
 
-console.log(
-  match([])(
-    (v = or(instanceOf(Number), instanceOf(Object))) => v,
-    v => ''
-  )
-)
-
-console.log(
-  match([])(
-    (v = or(instanceOf(Number), instanceOf(String))) => v,
-    v => 'no match'
-  )
-)
-
-console.log(
-  match([])(
-    (v = not(instanceOf(Array))) => v,
-    v => 'no match'
-  )
-)
+console.log(getType({a:1}))

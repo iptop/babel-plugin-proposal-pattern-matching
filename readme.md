@@ -60,6 +60,24 @@ console.log(
 
 ```
 
+### instanceOf
+```js
+import { match, instanceOf, } from 'babel-plugin-proposal-pattern-matching/match'
+
+const getType = val => match(val)(
+  (v=instanceOf(RegExp))=>'RegExp',
+  (v=instanceOf(Array))=>'Array',
+  (v=instanceOf(Object))=>'Object',
+)
+
+console.log(getType(/111/))
+// -> RegExp
+console.log(getType([1,2,3]))
+// -> Array
+console.log(getType({a:1}))
+// -> Object
+```
+
 ### deconstruction
 ```js
 import { match } from 'babel-plugin-proposal-pattern-matching/match'
@@ -100,6 +118,7 @@ console.log(fib(10))
 // -> 55
 ```
 
+### and
 ```js
 import { match, and, not } from 'babel-plugin-proposal-pattern-matching/match'
 const fib = n => match(n)(
