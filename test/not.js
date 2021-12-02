@@ -1,43 +1,11 @@
-import { match, not, or } from '../match'
+import { match, not, or, T } from '../match'
 
-console.log(
-  match(1)(
-    (v = not(or(1, 456))) => v,
-    _ => ''
-  )
+const toNumber = n => match(n)(
+  (v = not(T.boolean)) => v,
+  (v = true) => 1,
+  (v = false) => 0
 )
 
 console.log(
-  match(1)(
-    (v = not(or(2, 3))) => v,
-    _ => ''
-  )
-)
-
-console.log(
-  match(2)(
-    (v = or(not(2), not(3))) => v,
-    _ => ''
-  )
-)
-
-console.log(
-  match(2)(
-    (v = or(not(2), not(2))) => v,
-    _ => ''
-  )
-)
-
-console.log(
-  match(2)(
-    (v = not(not(2))) => v,
-    _ => ''
-  )
-)
-
-console.log(
-  match(2)(
-    (v = not(not(3))) => v,
-    _ => ''
-  )
+  [true, false, 0, 1, 2, 3].map(toNumber)
 )
