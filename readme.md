@@ -100,6 +100,17 @@ console.log(fib(10))
 // -> 55
 ```
 
+```js
+import { match, and, not } from 'babel-plugin-proposal-pattern-matching/match'
+const fib = n => match(n)(
+  (_ = and(not(1), not(2))) => fib(_ - 1) + fib(_ - 2),
+  _ => 1
+)
+
+console.log(fib(10))
+// -> 55
+```
+
 ## LICENSE
 
 MIT
