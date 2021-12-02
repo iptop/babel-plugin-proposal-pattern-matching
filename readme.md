@@ -32,7 +32,7 @@ console.log(fib(10))
 
 ### type
 ```js
-import { match , T} from '../match'
+import { match , T} from 'babel-plugin-proposal-pattern-matching/match'
 
 console.log(
   ['a',
@@ -62,7 +62,7 @@ console.log(
 
 ### deconstruction
 ```js
-import { match } from '../match'
+import { match } from 'babel-plugin-proposal-pattern-matching/match'
 const sum = x => match(x)(
   ([x, ...xs]) => x + sum(xs),
   ([]) => 0
@@ -74,7 +74,7 @@ console.log(sum([1, 2, 3]))
 
 ### not
 ```js
-import { match, not, or, T } from '../match'
+import { match, not, or, T } from 'babel-plugin-proposal-pattern-matching/match'
 
 const toNumber = n => match(n)(
   (v = not(T.boolean)) => v,
