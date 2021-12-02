@@ -88,6 +88,35 @@ const sum = x => match(x)(
 
 console.log(sum([1, 2, 3]))
 // -> 6
+
+
+for (let i = 1; i <= 15; i++) {
+  console.log(
+    match({a: i % 3, b: i % 5})(
+      ({a = 0, b = 0}) => 'FizzBuzz',
+      ({a = 0, b}) => 'Fizz',
+      ({a, b = 0}) => 'Buzz',
+      _ => i
+    )
+  )
+}
+// ->
+// 1
+// 2
+// Fizz
+// 4
+// Buzz
+// Fizz
+// 7
+// 8
+// Fizz
+// Buzz
+// 11
+// Fizz
+// 13
+// 14
+// FizzBuzz
+
 ```
 
 ### not
