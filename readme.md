@@ -30,6 +30,35 @@ console.log(fib(10))
 // -> 55
 ```
 
+### type
+```js
+import { match , T} from '../match'
+
+console.log(
+  ['a',
+    1,
+    null,
+    undefined,
+    0,
+    [1,2,3]
+  ].map(item=>match(item)(
+    (v=T.number)=>`${v} is number`,
+    (v=T.string)=>`${v} is string`,
+    (v=T.nullish)=>`${v} is nullish`,
+    _=>`${_} undefined type`
+  ))
+)
+//[
+//  'a is string',
+//  '1 is number',
+//  'null is nullish',
+//  'undefined is nullish',
+//  '0 is number',
+//  '1,2,3 undefined type'
+//]
+
+```
+
 ### deconstruction
 ```js
 import { match } from '../match'
