@@ -24,6 +24,26 @@ const T = {
     return isNaN(val)
   })
 }
+
+const and = createRuntimeFunction(function (){
+  const args = arguments
+  return createRuntimeFunction(function (val) {
+    for (let i = 0; i < args.length; i++) {
+      const test = args[i]
+      if (typeof test === 'function' && test.isPatternMatchingRuntimeFunction) {
+        if (!test(val)) {
+          return false
+        }
+      } else {
+        if (val !== test) {
+          return false
+        }
+      }
+    }
+    return true
+  })
+})
+
 const or = createRuntimeFunction(function () {
   const args = arguments
   return createRuntimeFunction(function (val) {
@@ -61,6 +81,7 @@ const instanceOf = createRuntimeFunction(function (constructor){
 module.exports = match
 module.exports.match = match
 module.exports.T = T
+module.exports.and = and
 module.exports.or = or
 module.exports.not = not
 module.exports.instanceOf = instanceOf

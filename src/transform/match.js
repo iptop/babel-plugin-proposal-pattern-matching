@@ -92,6 +92,10 @@ function isOperation ($paramValue) {
 
   const astTag = $paramValue.get('callee').getData('pattern-matching')
 
+  if (astTag == 'and') {
+    return true
+  }
+
   if (astTag == 'or') {
     return true
   }
