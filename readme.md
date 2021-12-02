@@ -62,7 +62,7 @@ console.log(
 
 ### instanceOf
 ```js
-import { match, instanceOf, } from 'babel-plugin-proposal-pattern-matching/match'
+import { match, instanceOf } from 'babel-plugin-proposal-pattern-matching/match'
 
 const getType = val => match(val)(
   (v=instanceOf(RegExp))=>'RegExp',
