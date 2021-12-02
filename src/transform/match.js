@@ -136,6 +136,22 @@ function transformDeconstructionLeaf (babel, $param) {
         $$IFBlocks.push($$IFBlock)
       }
       path.replaceWith($$Assignment.left)
+      path.setData('pattern-matching', 'assignment-pattern')
+    },
+    Identifier (path) {
+      const $parent = path.parentPath
+      const $$parent = $parent.node
+      if ($$parent.type == 'ArrayPattern' || $$parent.type == 'ObjectPattern') {
+        const data = path.getData('pattern-matching')
+        if (data !== 'assignment-pattern') {
+          const $$IFBlock = babel.template(`
+        if(VAR === undefined ){
+          throw new Error("No matching pattern");
+        }
+        `)({ VAR: path.node })
+          $$IFBlocks.push($$IFBlock)
+        }
+      }
     }
   }, $param.scope, $param.path)
   return $$IFBlocks
