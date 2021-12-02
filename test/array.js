@@ -1,4 +1,4 @@
-import { match, T } from '../match'
+import { match } from '../match'
 const sum = x => match(x)(
   ([x, ...xs]) => x + sum(xs),
   ([]) => 0
