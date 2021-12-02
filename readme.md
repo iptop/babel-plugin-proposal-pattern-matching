@@ -15,14 +15,27 @@ npm install --save-dev babel-plugin-proposal-pattern-matching
 }
 ```
 
-#### Example
+## Example
 
+### easy
 ```js
 import match from 'babel-plugin-proposal-pattern-matching/match'
 const fib = n=>match(n)(
         (v=1)=>1,
         (v=2)=>1,
         _=>fib(_-1)+fib(_-2)
+)
+
+console.log(fib(10))
+// -> 55
+```
+
+### or
+```js
+import { match, or } from 'babel-plugin-proposal-pattern-matching/match'
+const fib = n => match(n)(
+  (v = or(1, 2)) => 1,
+  _ => fib(_ - 1) + fib(_ - 2)
 )
 
 console.log(fib(10))
