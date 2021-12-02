@@ -1,42 +1,41 @@
-import { match, instanceOf , or, not} from '../match'
+import { match, instanceOf, or, not } from '../match'
 
 console.log(
   match([])(
-    (v=instanceOf(Array))=>v
+    (v = instanceOf(Array)) => v
   )
 )
 
 console.log(
   match([])(
-    (v=instanceOf(Object))=>v
+    (v = instanceOf(Object)) => v
   )
 )
 
 console.log(
   match([])(
-    (v=instanceOf(Number))=>v,
-    v=>''
+    (v = instanceOf(Number)) => v,
+    v => ''
   )
 )
 
 console.log(
   match([])(
-    (v=or(instanceOf(Number),instanceOf(Object)))=>v,
-    v=>''
+    (v = or(instanceOf(Number), instanceOf(Object))) => v,
+    v => ''
   )
 )
 
 console.log(
   match([])(
-    (v=or(instanceOf(Number),instanceOf(String)))=>v,
-    v=>'no match'
+    (v = or(instanceOf(Number), instanceOf(String))) => v,
+    v => 'no match'
   )
 )
 
-
 console.log(
   match([])(
-    (v=not(instanceOf(Array)))=>v,
-    v=>'no match'
+    (v = not(instanceOf(Array))) => v,
+    v => 'no match'
   )
 )
