@@ -1,16 +1,20 @@
 import { match, T } from '../match'
 
-console.log(
-  ['a',
-    1,
-    null,
-    undefined,
-    0,
-    [1, 2, 3]
-  ].map(item => match(item)(
-    (v = T.number) => `${v} is number`,
-    (v = T.string) => `${v} is string`,
-    (v = T.nullish) => `${v} is nullish`,
-    _ => `${_} undefined type`
-  ))
+const getType = item => match(item)(
+  (v = T.number) => 'number',
+  (v = T.string) => 'string',
+  (v = T.nullish) => 'nullish',
+  _ => `${_} undefined type`
 )
+
+console.log(getType('a'))
+// -> string
+
+console.log(getType(1))
+// -> number
+
+console.log(getType(undefined))
+// -> nullish
+
+console.log(getType(null))
+// -> nullish
