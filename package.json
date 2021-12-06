@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint --fix src test"
+    "lint": "eslint --fix src test match.js"
   },
   "repository": {
     "type": "git",

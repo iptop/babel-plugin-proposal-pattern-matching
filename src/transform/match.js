@@ -200,3 +200,6 @@ module.exports = function transformMatch (babel, referencePath) {
   })
   $root.replaceWith($$IIFE)
 }
+
+module.exports.getPatterns = getPatterns
+module.exports.transformPatterns = transformPatterns

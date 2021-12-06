@@ -1,4 +1,5 @@
 const transformMatch = require('../transform/match')
+const transformFnMatch = require('../transform/fnmatch')
 module.exports = (babel, path, state) => {
   const $callee = path.get('callee')
   const $$callee = $callee.node
@@ -7,6 +8,10 @@ module.exports = (babel, path, state) => {
     const astTag = $callee.getData('pattern-matching')
     if (astTag == 'match') {
       transformMatch(babel, $callee)
+    }
+
+    if (astTag == 'fnmatch') {
+      transformFnMatch(babel, $callee)
     }
   }
 }

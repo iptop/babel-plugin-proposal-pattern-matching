@@ -2,6 +2,10 @@ function match () {
 
 }
 
+function fnmatch () {
+
+}
+
 function createRuntimeFunction (f) {
   f.isPatternMatchingRuntimeFunction = true
   return f
@@ -25,7 +29,7 @@ const T = {
   })
 }
 
-const and = createRuntimeFunction(function (){
+const and = createRuntimeFunction(function () {
   const args = arguments
   return createRuntimeFunction(function (val) {
     for (let i = 0; i < args.length; i++) {
@@ -63,16 +67,16 @@ const or = createRuntimeFunction(function () {
   })
 })
 
-const not = createRuntimeFunction(function (test){
-  return createRuntimeFunction(function (val){
+const not = createRuntimeFunction(function (test) {
+  return createRuntimeFunction(function (val) {
     if (typeof test === 'function' && test.isPatternMatchingRuntimeFunction) {
       return !test(val)
     }
-    return test!==val
+    return test !== val
   })
 })
 
-const instanceOf = createRuntimeFunction(function (constructor){
+const instanceOf = createRuntimeFunction(function (constructor) {
   return createRuntimeFunction(function (val) {
     return val instanceof constructor
   })
@@ -80,6 +84,7 @@ const instanceOf = createRuntimeFunction(function (constructor){
 
 module.exports = match
 module.exports.match = match
+module.exports.fnmatch = fnmatch
 module.exports.T = T
 module.exports.and = and
 module.exports.or = or
