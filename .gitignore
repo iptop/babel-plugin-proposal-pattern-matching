@@ -21,8 +21,3 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
-
-# h5编译后文件处理
-/src/wxcomponents/vant/**/*.vue
-/src/wxcomponents/vant/**/*.css
-/src/wxcomponents/vant/**/*.wxs
