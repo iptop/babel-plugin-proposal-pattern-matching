@@ -1,15 +1,19 @@
-![avatar](./doc/img/logo.png)
+![avatar](../../doc/img/logo.png)
+## 关于本项目
 
-[中文文档](./doc/zn-ch/readme.md)
+本项目是一个实验性质的项目，从Python、Scala、Rust、Clojure等语言中获得灵感，通过Babel插件的方式在JavaScript中支持`模式匹配技术`，创建该项目的原则
+* 新的`模式匹配`语法必须完全符合现有ES规范，要做的只是在旧的语法上扩展全新的语义（这样做的目的是为了避免太过激进的语法改造使得编辑器、代码格式化工具等工具链无法适配）
+* 最简洁的书写语法
+* 最低限度的运行时性能开销
 
-## Installation
+## 安装
 
-With npm:
+从 npm:
 ```sh
 npm install --save-dev babel-plugin-proposal-pattern-matching
 ```
 
-## Setup
+## 配置
 
 ### .babelrc
 
@@ -19,9 +23,9 @@ npm install --save-dev babel-plugin-proposal-pattern-matching
 }
 ```
 
-## Example
+## 例子
 
-### easy
+### 一个简单的例子
 ```js
 import match from 'babel-plugin-proposal-pattern-matching/match'
 const fib = n=>match(n)(
@@ -35,6 +39,7 @@ console.log(fib(10))
 ```
 
 ### fnmatch
+有的时候我们希望match先接收patterns再直接返回一个接收待匹配值的函数，这样有助于简化我们的代码
 ```js
 import match from 'babel-plugin-proposal-pattern-matching/match'
 const fib = fnmatch(
@@ -64,6 +69,7 @@ console.log(
 ```
 
 ### type
+类型判断，这里的类型指的是使用JavaScript中的 typeof所能获得的类型
 ```js
 import { match , T} from 'babel-plugin-proposal-pattern-matching/match'
 
@@ -90,6 +96,7 @@ console.log(getType(null))
 ```
 
 ### instanceOf
+类型判断，这里的类型判断主要针对Object类型，和JavaScript中的instanceof也是等价的
 ```js
 import { match, instanceOf } from 'babel-plugin-proposal-pattern-matching/match'
 
@@ -108,6 +115,7 @@ console.log(getType({a:1}))
 ```
 
 ### deconstruction
+解构，这个是模式匹配技术常用的一个姿势，也是模式匹配技术的一个强大之处，支持递归
 ```js
 import { match } from 'babel-plugin-proposal-pattern-matching/match'
 const sum = x => match(x)(
@@ -149,6 +157,7 @@ for (let i = 1; i <= 15; i++) {
 ```
 
 ### not
+内置逻辑操作，表示不满足某个条件
 ```js
 import { match, not, or, T } from 'babel-plugin-proposal-pattern-matching/match'
 
@@ -165,6 +174,7 @@ console.log(
 ```
 
 ### or
+内置逻辑操作，表示至少满足多个条件中的任意一个
 ```js
 import { match, or } from 'babel-plugin-proposal-pattern-matching/match'
 const fib = n => match(n)(
@@ -177,6 +187,7 @@ console.log(fib(10))
 ```
 
 ### and
+内置逻辑操作，表示同时满足多个条件
 ```js
 import { match, and, not } from 'babel-plugin-proposal-pattern-matching/match'
 const fib = n => match(n)(
