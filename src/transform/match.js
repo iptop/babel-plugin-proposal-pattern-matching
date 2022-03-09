@@ -78,9 +78,9 @@ function transformPatterns (babel, $patterns, $$uid) {
       case 'Identifier':
         return createReturnBlock(babel, $pattern, $param, $$uid)
       case 'ArrayPattern':
-        return createDeconstruction(babel, $pattern, $param, $$uid)
+        return createDeconstruction(babel, $pattern, $param, $$uid, 'ArrayPattern')
       case 'ObjectPattern':
-        return createDeconstruction(babel, $pattern, $param, $$uid)
+        return createDeconstruction(babel, $pattern, $param, $$uid, 'ObjectPattern')
     }
   })
 }
@@ -111,8 +111,22 @@ function isOperation ($paramValue) {
   return false
 }
 
-function transformDeconstructionLeaf (babel, $param) {
+function instanceOfArrayIFBlock (babel, $$target) {
+  const $$IFBlock = babel.template(`
+        if(!( TARGET instanceof Array)){
+          throw new Error("No matching pattern");
+        }
+        `)({ TARGET: $$target })
+  return $$IFBlock
+}
+
+function transformDeconstructionLeaf (babel, $param, $$UID, patternType) {
   const $$IFBlocks = []
+  if (patternType == 'ArrayPattern') {
+    $$IFBlocks.push(
+      instanceOfArrayIFBlock(babel, $$UID)
+    )
+  }
   const traverse = babel.traverse
   const $$param = $param.node
   traverse($$param, {
@@ -157,12 +171,12 @@ function transformDeconstructionLeaf (babel, $param) {
   return $$IFBlocks
 }
 
-function createDeconstruction (babel, $pattern, $param, $$UID) {
+function createDeconstruction (babel, $pattern, $param, $$UID, patternType) {
   const $$param = $param.node
   const $body = $pattern.get('body')
   const $$body = $body.node
 
-  const $$IFBlocks = transformDeconstructionLeaf(babel, $param)
+  const $$IFBlocks = transformDeconstructionLeaf(babel, $param, $$UID, patternType)
   const $$deconstruction = babel.template(`
     try{
       let PATTERN = UID
